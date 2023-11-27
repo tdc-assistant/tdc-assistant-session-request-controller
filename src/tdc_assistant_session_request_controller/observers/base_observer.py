@@ -2,8 +2,8 @@ from typing import Optional
 
 import abc
 
-from logger import Logger
-from events import Event
+from ..logger import Logger
+from ..events import Event
 
 
 class BaseObserver:
