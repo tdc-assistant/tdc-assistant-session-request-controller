@@ -19,6 +19,7 @@ class ClassroomOpenObserver(BaseObserver):
             if optional_window_manager.has_control_by_property(
                 "automation_id", "txtChatLog"
             ):
+                optional_window_manager.maximize_window()
                 return "classroom-open"
 
         return None
