@@ -24,6 +24,22 @@ class WindowManager:
 
         return None
 
+    def _is_control_property_match(
+        self,
+        control: Any,
+        property_type: str,
+        property_value: str,
+    ) -> bool:
+        return control.get_properties().get(property_type) == property_value
+
+    def _find_control_by_property(
+        self, property_type: str, property_value: str
+    ) -> Optional[Any]:
+        for control in self._pywinauto_window.descendants():
+            if self._is_control_property_match(control, property_type, property_value):
+                return control
+        return None
+
     def click_control(self, control_text: ControlText) -> None:
         optional_control = self._find_control(control_text)
 
@@ -32,3 +48,6 @@ class WindowManager:
 
     def has_control(self, control_text: ControlText) -> bool:
         return self._find_control(control_text) is not None
+
+    def has_control_by_property(self, property_type: str, property_value: str) -> bool:
+        return self._find_control_by_property(property_type, property_value) is not None

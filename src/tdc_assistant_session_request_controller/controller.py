@@ -1,9 +1,9 @@
 from typing import List
-from observers import BaseObserver, WindowObserver
-from windows import WindowTitle, ControlText
-from events import Event
+from .observers import BaseObserver, WindowObserver, ClassroomOpenObserver
+from .windows import WindowTitle, ControlText
+from .events import Event
 
-terminating_events: List[Event] = ["accept-session-request"]
+terminating_events: List[Event] = ["classroom-open"]
 
 
 class Controller:
@@ -32,4 +32,12 @@ accept_session_request_observer = WindowObserver(
     WindowTitle.CLASSROOM, ControlText.ACCEPT, "accept-session-request"
 )
 
-controller = Controller([new_session_alert_observer, accept_session_request_observer])
+classroom_open_observer = ClassroomOpenObserver()
+
+controller = Controller(
+    [
+        new_session_alert_observer,
+        accept_session_request_observer,
+        classroom_open_observer,
+    ]
+)

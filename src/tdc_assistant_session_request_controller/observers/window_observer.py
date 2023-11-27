@@ -1,7 +1,7 @@
 from typing import Optional
 
-from events import Event
-from windows import WindowTitle, ControlText, get_first_window
+from ..events import Event
+from ..windows import WindowTitle, ControlText, get_first_window
 
 from .base_observer import BaseObserver
 
