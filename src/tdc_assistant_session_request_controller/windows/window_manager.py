@@ -51,3 +51,6 @@ class WindowManager:
 
     def has_control_by_property(self, property_type: str, property_value: str) -> bool:
         return self._find_control_by_property(property_type, property_value) is not None
+
+    def maximize_window(self):
+        self._pywinauto_window.maximize()
