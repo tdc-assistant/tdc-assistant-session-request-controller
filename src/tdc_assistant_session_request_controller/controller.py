@@ -10,9 +10,12 @@ class Controller:
     _observers: List[BaseObserver]
     _should_terminate: bool
 
-    def __init__(self, observers: List[BaseObserver]):
-        self._observers = observers
+    def __init__(self):
+        self._observers = []
         self._should_terminate = False
+
+    def add_observer(self, observer: BaseObserver):
+        self._observers.append(observer)
 
     def run(self) -> None:
         for observer in self._observers:
@@ -24,20 +27,14 @@ class Controller:
         return self._should_terminate
 
 
-new_session_alert_observer = WindowObserver(
-    WindowTitle.CLASSROOM, ControlText.I_AM_HERE, "new-session-alert"
+controller = Controller()
+
+controller.add_observer(
+    WindowObserver(WindowTitle.CLASSROOM, ControlText.I_AM_HERE, "new-session-alert")
 )
 
-accept_session_request_observer = WindowObserver(
-    WindowTitle.CLASSROOM, ControlText.ACCEPT, "accept-session-request"
+controller.add_observer(
+    WindowObserver(WindowTitle.CLASSROOM, ControlText.ACCEPT, "accept-session-request")
 )
 
-classroom_open_observer = ClassroomOpenObserver()
-
-controller = Controller(
-    [
-        new_session_alert_observer,
-        accept_session_request_observer,
-        classroom_open_observer,
-    ]
-)
+controller.add_observer(ClassroomOpenObserver())

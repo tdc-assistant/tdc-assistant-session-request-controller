@@ -1,5 +1,7 @@
 from typing import Any, Optional
 
+from ..logger import Logger
+
 from .control_texts import ControlText
 
 
@@ -13,9 +15,11 @@ def _control_has_text(control: Any, control_text: ControlText) -> bool:
 
 class WindowManager:
     _pywinauto_window: Any
+    _logger: Logger
 
     def __init__(self, pywinauto_window: Any):
         self._pywinauto_window = pywinauto_window
+        self._logger = Logger(self)
 
     def _find_control(self, control_text: ControlText) -> Optional[Any]:
         for control in self._pywinauto_window.descendants():
@@ -44,7 +48,10 @@ class WindowManager:
         optional_control = self._find_control(control_text)
 
         if optional_control is not None:
-            optional_control.click()
+            try:
+                optional_control.click()
+            except:
+                self._logger.log_warning("Failed to click control")
 
     def has_control(self, control_text: ControlText) -> bool:
         return self._find_control(control_text) is not None
